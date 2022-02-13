@@ -1,24 +1,24 @@
 import axios from "axios";
 
-export const PRODUCTS_URL = "/pro";
+export const PRODUCTS_URL = "/assures";
 
-// CREATE =>  POST: add a new professional to the server
-export function createProfessional(professional) {
-  return axios.post(PRODUCTS_URL, { ...professional });
+// CREATE =>  POST: add a new assure to the server
+export function createAssure(assure) {
+  return axios.post(PRODUCTS_URL, { ...assure });
 }
 
 // READ
-export function getAllProfessionals(page, count, queryParams={}, order="asc", orderBy="professionalname") {
-  return axios.get(`${PRODUCTS_URL}?page=${page}&count=${count}&order=${order === "asc" ? 1 : -1}&by=${orderBy}&${Object.keys(queryParams.filter).map(key => queryParams.filter[key] ? `${key}=${queryParams.filter[key]}` : '').join('&')}`);
+export function getAllAssures(page, count, queryParams={}, order="asc", orderBy="assurename") {
+  return axios.get(`${PRODUCTS_URL}/all?page=${page}&count=${count}&order=${order === "asc" ? 1 : -1}&by=${orderBy}&${Object.keys(queryParams.filter).map(key => queryParams.filter[key] ? `${key}=${queryParams.filter[key]}` : '').join('&')}`);
 }
 
-export function getProfessionalById(professionalId) {
-  return axios.get(`${PRODUCTS_URL}/${professionalId}`);
+export function getAssureById(assureId) {
+  return axios.get(`${PRODUCTS_URL}/${assureId}`);
 }
 
 // Method from server should return QueryResultsModel(items: any[], totalsCount: number)
 // items => filtered/sorted result
-export function findProfessionals(page, count, filter={}, order="asc", orderBy="professionalname") {
+export function findAssures(page, count, filter={}, order="asc", orderBy="assurename") {
   const data = {};
   if (filter.category || filter.gov) {
     if (filter.category) {
@@ -35,17 +35,17 @@ export function findProfessionals(page, count, filter={}, order="asc", orderBy="
 }
 
 // UPDATE => PUT: update the procuct on the server
-export function updateProfessional(professional) {
-  return axios.post(`${PRODUCTS_URL}/${professional._id}`, { ...professional });
+export function updateAssure(assure) {
+  return axios.post(`${PRODUCTS_URL}/${assure._id}`, { ...assure });
 }
 
-// DELETE => delete the professional from the server
-export function deleteProfessional(professionalId) {
-  return axios.delete(`${PRODUCTS_URL}/${professionalId}`);
+// DELETE => delete the assure from the server
+export function deleteAssure(assureId) {
+  return axios.delete(`${PRODUCTS_URL}/${assureId}`);
 }
 
-// DELETE Professionals by ids
-export function deleteProfessionals(ids) {
+// DELETE Assures by ids
+export function deleteAssures(ids) {
   return axios.post(`${PRODUCTS_URL}/delete/batch`, { ids });
 }
 

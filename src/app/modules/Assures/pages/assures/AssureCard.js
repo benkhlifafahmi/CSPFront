@@ -5,14 +5,14 @@ import {
   CardHeader,
   CardHeaderToolbar,
 } from "../../../../../_metronic/_partials/controls";
-import { ProfessionalsFilter } from "./professionals-filter/ProfessionalsFilter";
-import { ProfessionalsTable } from "./professional-table/ProfessionalTable";
-import { ProfessionalsGrouping } from "./professional-grouping/ProfessionalGrouping";
-import { useProfessionalsUIContext } from "./ProfessionalUIContext";
+import { AssuresFilter } from "./assures-filter/AssuresFilter";
+import { AssuresTable } from "./assure-table/AssureTable";
+import { AssuresGrouping } from "./assure-grouping/AssureGrouping";
+import { useAssuresUIContext } from "./AssureUIContext";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../../_redux/professionals/professionalsActions";
+import * as actions from "../../_redux/assures/assuresActions";
 import "leaflet.heat";
 import L from 'leaflet'
 import { useLeafletContext } from '@react-leaflet/core'
@@ -31,8 +31,9 @@ function HeatMap({entities}) {
     const points = entities
     ? entities.map((p) => {
       return [p.longitude, p.latitude, 1]; // lat lng intensity
-    })
+    }).filter(p => p[0] !=null && p[1] !== null)
     : [];
+    console.log('points: ', points)
     L.heatLayer(points, {isHeat: true, gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}, radius: 25}).addTo(container);
   }, [entities]);
   return null;  
@@ -51,8 +52,8 @@ function ClusterMap({entities}) {
     })
     const points = entities
     ? entities.map((p) => {
-      return  [p.longitude, p.latitude]; // lat lng intensity
-    })
+      return [p.longitude, p.latitude]; // lat lng intensity
+    }).filter(p => p[0] !=null && p[1] !== null)
     : [];
     
     const markers =L.markerClusterGroup({isCluster: true});
@@ -67,35 +68,35 @@ function ClusterMap({entities}) {
   return null;  
 }
 
-export function ProfessionalsCard({ intl }) {
-  const professionalsUIContext = useProfessionalsUIContext();
-  const professionalsUIProps = useMemo(() => {
+export function AssuresCard({ intl }) {
+  const assuresUIContext = useAssuresUIContext();
+  const assuresUIProps = useMemo(() => {
     return {
-      ids: professionalsUIContext.ids,
-      queryParams: professionalsUIContext.queryParams,
-      setQueryParams: professionalsUIContext.setQueryParams,
-      newProfessionalButtonClick: professionalsUIContext.newProfessionalButtonClick,
-      openDeleteProfessionalsDialog: professionalsUIContext.openDeleteProfessionalsDialog,
-      openEditProfessionalPage: professionalsUIContext.openEditProfessionalPage,
-      setIds: professionalsUIContext.setIds,
+      ids: assuresUIContext.ids,
+      queryParams: assuresUIContext.queryParams,
+      setQueryParams: assuresUIContext.setQueryParams,
+      newAssureButtonClick: assuresUIContext.newAssureButtonClick,
+      openDeleteAssuresDialog: assuresUIContext.openDeleteAssuresDialog,
+      openEditAssurePage: assuresUIContext.openEditAssurePage,
+      setIds: assuresUIContext.setIds,
     };
-  }, [professionalsUIContext]);
+  }, [assuresUIContext]);
 
 
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.professionals }),
+    (state) => ({ currentState: state.assures }),
     shallowEqual
   );
   const { totalCount, entities, listLoading } = currentState;
-  // Professionals Redux state
+  // Assures Redux state
   const dispatch = useDispatch();
   useEffect(() => {
     // clear selections list
-    professionalsUIProps.setIds([]);
+    assuresUIProps.setIds([]);
     // server call by queryParams
-    dispatch(actions.fetchProfessionals(professionalsUIProps.queryParams));
+    dispatch(actions.fetchAssures(assuresUIProps.queryParams));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [professionalsUIProps.queryParams, dispatch]);
+  }, [assuresUIProps.queryParams, dispatch]);
 
 
   return (
@@ -104,10 +105,10 @@ export function ProfessionalsCard({ intl }) {
 
       </CardHeader>
       <CardBody>
-        <ProfessionalsFilter intl={intl} />
-        {professionalsUIProps.ids.length > 0 && (
+        <AssuresFilter intl={intl} />
+        {assuresUIProps.ids.length > 0 && (
           <>
-            <ProfessionalsGrouping intl={intl} />
+            <AssuresGrouping intl={intl} />
           </>
         )}
         <div style={{display: 'flex'}}>
@@ -118,8 +119,9 @@ export function ProfessionalsCard({ intl }) {
           />
           <HeatMap entities={entities}/>
           <ClusterMap entities={entities} />
+
         </MapContainer>
-        <ProfessionalsTable intl={intl} professionalsUIProps={professionalsUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
+        <AssuresTable intl={intl} assuresUIProps={assuresUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
         </div>
       </CardBody>
     </Card>

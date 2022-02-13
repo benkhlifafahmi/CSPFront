@@ -3,6 +3,7 @@ import { Redirect, Switch } from "react-router-dom";
 import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { DashboardPage } from "./pages/DashboardPage";
 import { ProfessionalPage } from "./modules/Professional";
+import { AssurePage } from "./modules/Assures";
 
 export default function BasePage() {
 
@@ -15,6 +16,7 @@ export default function BasePage() {
         }
         <ContentRoute path="/dashboard" component={DashboardPage} />
         <ContentRoute path="/professional" component={ProfessionalPage} />
+        <ContentRoute path="/assure" component={AssurePage} />
         
         <Redirect to="error/error-v1" />
       </Switch>
