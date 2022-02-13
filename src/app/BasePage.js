@@ -4,6 +4,7 @@ import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { DashboardPage } from "./pages/DashboardPage";
 import { ProfessionalPage } from "./modules/Professional";
 import { AssurePage } from "./modules/Assures";
+import { ApciPage } from "./modules/APCI";
 
 export default function BasePage() {
 
@@ -17,6 +18,7 @@ export default function BasePage() {
         <ContentRoute path="/dashboard" component={DashboardPage} />
         <ContentRoute path="/professional" component={ProfessionalPage} />
         <ContentRoute path="/assure" component={AssurePage} />
+        <ContentRoute path="/apci" component={ApciPage} />
         
         <Redirect to="error/error-v1" />
       </Switch>

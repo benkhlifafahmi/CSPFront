@@ -190,5 +190,9 @@
   "LOTS.CANCEL": "Annuler",
   "PRODUCTION.CANCEL": "Annuler",
   "PRODUCTS.DELETE_TITLE": "Supprimer produit",
-  "LOTS.GALLERY": "List des images"
+  "LOTS.GALLERY": "List des images",
+  "ASSURES_AGE": "Age",
+  "ASSURES_SEXE": "Sexe",
+  "ASSURES_LIST": "Liste des assures",
+  "MENU.APCI": "APCI"
 }

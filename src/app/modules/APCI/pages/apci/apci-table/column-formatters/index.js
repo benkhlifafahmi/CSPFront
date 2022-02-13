@@ -1,2 +1,2 @@
 export {ActionsColumnFormatter} from "./ActionsColumnFormatter";
-export {SexeFormatter} from "./SexeFormatter";
+export {AddressFormatter} from "./AddressFormatter";

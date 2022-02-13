@@ -49,6 +49,18 @@ export function AsideMenuList({ layoutProps }) {
                 </NavLink>
               </li>
 
+              <li
+                className={`menu-item ${getMenuItemActive("/apci", false)}`}
+                aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to="/apci">
+                  <span className="svg-icon menu-icon">
+                    <SVG src={toAbsoluteUrl("/media/svg/icons/Map/Compass.svg")} />
+                  </span>
+                  <span className="menu-text">{intl.formatMessage({ id: 'MENU.APCI' })}</span>
+                </NavLink>
+              </li>
+
       </ul>
 
       {/* end::Menu Nav */}

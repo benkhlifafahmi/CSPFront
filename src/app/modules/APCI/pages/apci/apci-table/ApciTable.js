@@ -7,8 +7,8 @@ import paginationFactory, {
   PaginationProvider,
 } from "react-bootstrap-table2-paginator";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../../../_redux/assures/assuresActions";
-import * as uiHelpers from "../AssureUIHelpers";
+import * as actions from "../../../_redux/apcis/apcisActions";
+import * as uiHelpers from "../ApciUIHelpers";
 import {
   getSelectRow,
   getHandlerTableChange,
@@ -18,33 +18,26 @@ import {
 } from "../../../../../../_metronic/_helpers";
 import * as columnFormatters from "./column-formatters";
 import { Pagination } from "../../../../../../_metronic/_partials/controls";
-import { useAssuresUIContext } from "../AssureUIContext";
+import { useApcisUIContext } from "../ApciUIContext";
 
-export function AssuresTable({intl, totalCount, entities, listLoading, assuresUIProps }) {
+export function ApcisTable({intl, totalCount, entities, listLoading, apcisUIProps }) {
 
  
   // Table columns
   const columns = [
     {
-      dataField: "ageAss",
-      text: intl.formatMessage({id: 'ASSURES_AGE'}),
+      dataField: "nom_apci",
+      text: intl.formatMessage({id: 'PROFESSIONAL_SPECIALITY'}),
       sort: true,
       sortCaret: sortCaret,
-    },
-    {
-      dataField: "sexeAss",
-      text: intl.formatMessage({id: 'ASSURES_SEXE'}),
-      sort: true,
-      sortCaret: sortCaret,
-      formatter: columnFormatters.SexeFormatter
     },
     /*{
       dataField: "action",
       text: "Actions",
       formatter: columnFormatters.ActionsColumnFormatter,
       formatExtraData: {
-        openEditAssurePage: assuresUIProps.openEditAssurePage,
-        openDeleteAssureDialog: assuresUIProps.openDeleteAssureDialog,
+        openEditApciPage: apcisUIProps.openEditApciPage,
+        openDeleteApciDialog: apcisUIProps.openDeleteApciDialog,
       },
       classes: "text-right pr-0",
       headerClasses: "text-right pr-3",
@@ -58,8 +51,8 @@ export function AssuresTable({intl, totalCount, entities, listLoading, assuresUI
     custom: true,
     totalSize: totalCount,
     sizePerPageList: uiHelpers.sizePerPageList,
-    sizePerPage: assuresUIProps.queryParams.pageSize,
-    page: assuresUIProps.queryParams.pageNumber,
+    sizePerPage: apcisUIProps.queryParams.pageSize,
+    page: apcisUIProps.queryParams.pageNumber,
   };
   return (
     <div style={{flex: 1}}>
@@ -80,12 +73,12 @@ export function AssuresTable({intl, totalCount, entities, listLoading, assuresUI
                 columns={columns}
                 defaultSorted={uiHelpers.defaultSorted}
                 onTableChange={getHandlerTableChange(
-                  assuresUIProps.setQueryParams
+                  apcisUIProps.setQueryParams
                 )}
                 selectRow={getSelectRow({
                   entities,
-                  ids: assuresUIProps.ids,
-                  setIds: assuresUIProps.setIds,
+                  ids: apcisUIProps.ids,
+                  setIds: apcisUIProps.setIds,
                 })}
                 {...paginationTableProps}
               >

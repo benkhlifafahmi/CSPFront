@@ -5,20 +5,18 @@ import {
   CardHeader,
   CardHeaderToolbar,
 } from "../../../../../_metronic/_partials/controls";
-import { AssuresFilter } from "./assures-filter/AssuresFilter";
-import { AssuresTable } from "./assure-table/AssureTable";
-import { AssuresGrouping } from "./assure-grouping/AssureGrouping";
-import { useAssuresUIContext } from "./AssureUIContext";
+import { ApcisFilter } from "./apcis-filter/ApcisFilter";
+import { ApcisTable } from "./apci-table/ApciTable";
+import { ApcisGrouping } from "./apci-grouping/ApciGrouping";
+import { useApcisUIContext } from "./ApciUIContext";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import * as actions from "../../_redux/assures/assuresActions";
+import * as actions from "../../_redux/apcis/apcisActions";
 import "leaflet.heat";
 import L from 'leaflet'
 import { useLeafletContext } from '@react-leaflet/core'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-import PieChartAge from "./PieChartAge";
-import PieChartSexe from "./PieChartSexe";
 
 function HeatMap({entities}) {
   const context = useLeafletContext()
@@ -33,9 +31,8 @@ function HeatMap({entities}) {
     const points = entities
     ? entities.map((p) => {
       return [p.longitude, p.latitude, 1]; // lat lng intensity
-    }).filter(p => p[0] !=null && p[1] !== null)
+    })
     : [];
-    console.log('points: ', points)
     L.heatLayer(points, {isHeat: true, gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}, radius: 25}).addTo(container);
   }, [entities]);
   return null;  
@@ -54,8 +51,8 @@ function ClusterMap({entities}) {
     })
     const points = entities
     ? entities.map((p) => {
-      return [p.longitude, p.latitude]; // lat lng intensity
-    }).filter(p => p[0] !=null && p[1] !== null)
+      return  [p.longitude, p.latitude]; // lat lng intensity
+    })
     : [];
     
     const markers =L.markerClusterGroup({isCluster: true});
@@ -70,56 +67,49 @@ function ClusterMap({entities}) {
   return null;  
 }
 
-export function AssuresCard({ intl }) {
-  const assuresUIContext = useAssuresUIContext();
-  const assuresUIProps = useMemo(() => {
+export function ApcisCard({ intl }) {
+  const apcisUIContext = useApcisUIContext();
+  const apcisUIProps = useMemo(() => {
     return {
-      ids: assuresUIContext.ids,
-      queryParams: assuresUIContext.queryParams,
-      setQueryParams: assuresUIContext.setQueryParams,
-      newAssureButtonClick: assuresUIContext.newAssureButtonClick,
-      openDeleteAssuresDialog: assuresUIContext.openDeleteAssuresDialog,
-      openEditAssurePage: assuresUIContext.openEditAssurePage,
-      setIds: assuresUIContext.setIds,
+      ids: apcisUIContext.ids,
+      queryParams: apcisUIContext.queryParams,
+      setQueryParams: apcisUIContext.setQueryParams,
+      newApciButtonClick: apcisUIContext.newApciButtonClick,
+      openDeleteApcisDialog: apcisUIContext.openDeleteApcisDialog,
+      openEditApciPage: apcisUIContext.openEditApciPage,
+      setIds: apcisUIContext.setIds,
     };
-  }, [assuresUIContext]);
+  }, [apcisUIContext]);
 
 
   const { currentState } = useSelector(
-    (state) => ({ currentState: state.assures }),
+    (state) => ({ currentState: state.apcis }),
     shallowEqual
   );
   const { totalCount, entities, listLoading } = currentState;
-  // Assures Redux state
+  // Apcis Redux state
   const dispatch = useDispatch();
   useEffect(() => {
     // clear selections list
-    assuresUIProps.setIds([]);
+    apcisUIProps.setIds([]);
     // server call by queryParams
-    dispatch(actions.fetchAssures(assuresUIProps.queryParams));
+    dispatch(actions.fetchApcis(apcisUIProps.queryParams));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assuresUIProps.queryParams, dispatch]);
+  }, [apcisUIProps.queryParams, dispatch]);
 
 
   return (
     <Card>
-      <CardHeader title={intl.formatMessage({ id: 'STAFF.ASSURES_LIST' })}>
+      <CardHeader title={intl.formatMessage({ id: 'STAFF.PROFESSIONAL_LIST' })}>
 
       </CardHeader>
       <CardBody>
-        {assuresUIProps.ids.length > 0 && (
+        <ApcisFilter intl={intl} />
+        {apcisUIProps.ids.length > 0 && (
           <>
-            <AssuresGrouping intl={intl} />
+            <ApcisGrouping intl={intl} />
           </>
         )}
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <div style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <PieChartAge entries={entities}/>
-          </div>
-          <div style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <PieChartSexe entries={entities}/>
-          </div>
-        </div>
         <div style={{display: 'flex'}}>
         <MapContainer style={{ height: '80vh', flex: .5, zIndex: 0 }} center={[35.5593013, 9.430487]} zoom={7} scrollWheelZoom={false}>
           <TileLayer
@@ -128,9 +118,8 @@ export function AssuresCard({ intl }) {
           />
           <HeatMap entities={entities}/>
           <ClusterMap entities={entities} />
-
         </MapContainer>
-        <AssuresTable intl={intl} assuresUIProps={assuresUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
+        <ApcisTable intl={intl} apcisUIProps={apcisUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
         </div>
       </CardBody>
     </Card>
