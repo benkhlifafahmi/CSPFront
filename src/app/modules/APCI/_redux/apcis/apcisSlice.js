@@ -9,6 +9,9 @@ const initialApcisState = {
   lastError: null, 
   categories: [],
   govs: [],
+  bens: [],
+  names: [],
+  filiers: []
 };
 export const callTypes = {
   list: "list",
@@ -103,6 +106,24 @@ export const apcisSlice = createSlice({
       state.listLoading = false;
       state.error = null;
       state.govs = entities;
+    },
+    bensFetched:  (state, action) => {
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.bens = entities;
+    },
+    namesFetched:  (state, action) => {
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.names = entities;
+    },
+    filiersFetched:  (state, action) => {
+      const { entities } = action.payload;
+      state.listLoading = false;
+      state.error = null;
+      state.filiers = entities;
     },
   }
 });

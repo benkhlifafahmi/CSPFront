@@ -31,7 +31,7 @@ function HeatMap({entities}) {
     const points = entities
     ? entities.map((p) => {
       return [p.longitude, p.latitude, 1]; // lat lng intensity
-    })
+    }).filter(p => p[0] && p[1])
     : [];
     L.heatLayer(points, {isHeat: true, gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}, radius: 25}).addTo(container);
   }, [entities]);
@@ -52,7 +52,7 @@ function ClusterMap({entities}) {
     const points = entities
     ? entities.map((p) => {
       return  [p.longitude, p.latitude]; // lat lng intensity
-    })
+    }).filter(p => p[0] && p[1])
     : [];
     
     const markers =L.markerClusterGroup({isCluster: true});

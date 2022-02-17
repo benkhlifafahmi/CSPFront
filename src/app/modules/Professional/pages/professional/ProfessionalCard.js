@@ -16,11 +16,11 @@ import * as actions from "../../_redux/professionals/professionalsActions";
 import "leaflet.heat";
 import L from 'leaflet'
 import { useLeafletContext } from '@react-leaflet/core'
-import MarkerClusterGroup from 'react-leaflet-cluster'
 
 function HeatMap({entities}) {
   const context = useLeafletContext()
   useEffect(() => {
+    console.log(entities);
     const container = context.layerContainer || context.map;
     container.eachLayer(function(layer) {
       //container.removeLayer(layer)
@@ -28,12 +28,14 @@ function HeatMap({entities}) {
         container.removeLayer(layer);
       }
     })
-    const points = entities
+    const points = entities !== null
     ? entities.map((p) => {
       return [p.longitude, p.latitude, 1]; // lat lng intensity
-    })
+    }).filter(p => p[0] !== null && p[1] !== null)
     : [];
-    L.heatLayer(points, {isHeat: true, gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}, radius: 25}).addTo(container);
+    if (container && points.length > 0) {
+      L.heatLayer(points, {isHeat: true, gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}, radius: 25}).addTo(container);
+    }
   }, [entities]);
   return null;  
 }
@@ -52,7 +54,7 @@ function ClusterMap({entities}) {
     const points = entities
     ? entities.map((p) => {
       return  [p.longitude, p.latitude]; // lat lng intensity
-    })
+    }).filter(p => p[0] !== null && p[1] !== null)
     : [];
     
     const markers =L.markerClusterGroup({isCluster: true});

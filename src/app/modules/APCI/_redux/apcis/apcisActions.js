@@ -117,3 +117,49 @@ export const fetchGovs = () => dispatch => {
       dispatch(actions.catchError({ error, callType: callTypes.list }));
     });
 };
+
+
+
+export const fetchBens = () => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.list }));
+  return requestFromServer
+    .getBens()
+    .then(response => {      
+      dispatch(actions.bensFetched({ entities: response.data }));
+    })
+    .catch(error => {
+      error.clientMessage = "Can't find apcis";
+      dispatch(actions.catchError({ error, callType: callTypes.list }));
+    });
+};
+
+export const fetchFiliers = () => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.list }));
+  return requestFromServer
+    .getFiliers()
+    .then(response => {      
+      dispatch(actions.filiersFetched({ entities: response.data }));
+    })
+    .catch(error => {
+      error.clientMessage = "Can't find apcis";
+      dispatch(actions.catchError({ error, callType: callTypes.list }));
+    });
+};
+
+
+export const fetchNames = () => dispatch => {
+  dispatch(actions.startCall({ callType: callTypes.list }));
+  return requestFromServer
+    .getNames()
+    .then(response => {      
+      dispatch(actions.namesFetched({ entities: response.data }));
+    })
+    .catch(error => {
+      error.clientMessage = "Can't find apcis";
+      dispatch(actions.catchError({ error, callType: callTypes.list }));
+    });
+};
+
+
+
+

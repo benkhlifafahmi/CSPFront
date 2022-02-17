@@ -2,18 +2,23 @@ import React, { useMemo, useEffect } from "react";
 import { Formik } from "formik";
 import { isEqual } from "lodash";
 import { useApcisUIContext } from "../ApciUIContext";
-import { fetchCategories, fetchGovs } from "../../../_redux/apcis/apcisActions";
+import { fetchBens, fetchFiliers, fetchNames } from "../../../_redux/apcis/apcisActions";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import Select from 'react-select';
+
 
 const prepareFilter = (queryParams, values) => {
-  const { category, gov } = values;
+  const { names, bens, filiers } = values;
   const newQueryParams = { ...queryParams };
   const filter = {};
-  if (category) {
-    filter.category = category;
+  if (names) {
+    filter.names = names;
   }
-  if (gov) {
-    filter.gov = gov;
+  if (bens) {
+    filter.bens = bens;
+  }
+  if (filiers) {
+    filter.filiers = filiers;
   }
   newQueryParams.filter = filter;
   return newQueryParams;
@@ -36,25 +41,28 @@ export function ApcisFilter({ listLoading, intl }) {
       apcisUIProps.setQueryParams(newQueryParams);
     }
   };
-  const { categories, govs } = useSelector(
-    (state) => ({ 
-      categories: state.apcis.categories,
-      govs: state.apcis.govs,
+  const { bens, names, filiers } = useSelector(
+    (state) => ({
+      bens: state.apcis.bens,
+      names: state.apcis.names,
+      filiers: state.apcis.filiers,
     }),
     shallowEqual
   );
   // Apcis Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCategories());
-    dispatch(fetchGovs());
+    dispatch(fetchBens());
+    dispatch(fetchNames());
+    dispatch(fetchFiliers());
   }, [dispatch]);
   return (
     <>
       <Formik
         initialValues={{
-          gov: "",
-          category: "",
+          names: '',
+          filiers: '',
+          bens: '',
         }}
         onSubmit={(values) => {
           applyFilter(values);
@@ -69,53 +77,75 @@ export function ApcisFilter({ listLoading, intl }) {
         }) => (
           <form onSubmit={handleSubmit} className="form form-label-right">
             <div className="form-group row">
-            <div className="col-lg-3">
+              <div className="col-lg-3">
                 <select
                   className="form-control"
-                  name="category"
-                  placeholder={intl.formatMessage({id:'PH_CATEGORY_FILTER'})}
+                  name="beneficiaire"
+                  placeholder={intl.formatMessage({ id: 'PH_FILTER_BNF' })}
                   onChange={(e) => {
-                    setFieldValue("category", e.target.value);
+                    setFieldValue("bens", e.target.value);
                     handleSubmit();
                   }}
                   onBlur={handleBlur}
-                  value={values.category}
+                  value={values.bens}
                 >
-                  <option value="">{intl.formatMessage({id: 'PRO_ALL_CAT'})}</option>
+                  <option value="">{intl.formatMessage({ id: 'ALL' })}</option>
                   {
-                    (categories||[]).map(
-                      category => (<option value={category}>{category}</option>)
+                    (bens || []).map(
+                      ben => (<option value={ben.filDes}>{ben.filDes}</option>)
                     )
                   }
                 </select>
                 <small className="form-text text-muted">
-                  <b>{intl.formatMessage({id: 'PH_CATEGORY_FILTER'})}</b>
+                  <b>{intl.formatMessage({ id: 'PH_FILTER_BEN' })}</b>
                 </small>
               </div>
               <div className="col-lg-3">
                 <select
                   className="form-control"
-                  name="gov"
-                  placeholder={intl.formatMessage({id:'PH_CATEGORY_FILTER'})}
+                  name="filiers"
+                  placeholder={intl.formatMessage({ id: 'PH_FILTER_BNF' })}
                   onChange={(e) => {
-                    setFieldValue("gov", e.target.value);
+                    setFieldValue("filiers", e.target.value);
                     handleSubmit();
                   }}
                   onBlur={handleBlur}
-                  value={values.gov}
+                  value={values.filiers}
                 >
-                  <option value="">{intl.formatMessage({id: 'PRO_ALL_CAT'})}</option>
+                  <option value="">{intl.formatMessage({ id: 'ALL' })}</option>
                   {
-                    (govs||[]).map(
-                      gov => (<option value={gov}>{gov}</option>)
+                    (filiers || []).map(
+                      f => (<option value={f.filDes}>{f.filDes}</option>)
                     )
                   }
                 </select>
                 <small className="form-text text-muted">
-                  <b>{intl.formatMessage({id: 'PH_CATEGORY_FILTER'})}</b>
+                  <b>{intl.formatMessage({ id: 'PH_FILTER_BEN' })}</b>
                 </small>
               </div>
-              
+              <div className="col-lg-3">
+                <select
+                  className="form-control"
+                  name="names"
+                  placeholder={intl.formatMessage({ id: 'PH_FILTER_BNF' })}
+                  onChange={(e) => {
+                    setFieldValue("names", e.target.value);
+                    handleSubmit();
+                  }}
+                  onBlur={handleBlur}
+                  value={values.names}
+                >
+                  <option value="">{intl.formatMessage({ id: 'ALL' })}</option>
+                  {
+                    (names || []).map(
+                      n => (<option value={n.apciName}>{n.apciName}</option>)
+                    )
+                  }
+                </select>
+                <small className="form-text text-muted">
+                  <b>{intl.formatMessage({ id: 'PH_FILTER_BEN' })}</b>
+                </small>
+              </div>
             </div>
           </form>
         )}

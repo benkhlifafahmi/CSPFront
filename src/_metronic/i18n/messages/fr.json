@@ -194,5 +194,12 @@
   "ASSURES_AGE": "Age",
   "ASSURES_SEXE": "Sexe",
   "ASSURES_LIST": "Liste des assures",
-  "MENU.APCI": "APCI"
+  "MENU.APCI": "APCI",
+  "APCI_NAME": "Nom",
+  "APCI_SEXE": "Sexe",
+  "APCI_BENEFICIAIRE": "Beneficiaire",
+  "APCI_FILIER": "Filier",
+  "PH_FILTER_SEXE": "Filtrer par sexe",
+  "ALL": "Tous",
+  "PH_FILTER_BEN": "Filtrer par Beneficiaire"
 }

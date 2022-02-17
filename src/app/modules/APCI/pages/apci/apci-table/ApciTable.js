@@ -21,30 +21,32 @@ import { Pagination } from "../../../../../../_metronic/_partials/controls";
 import { useApcisUIContext } from "../ApciUIContext";
 
 export function ApcisTable({intl, totalCount, entities, listLoading, apcisUIProps }) {
-
- 
   // Table columns
   const columns = [
     {
       dataField: "nom_apci",
-      text: intl.formatMessage({id: 'PROFESSIONAL_SPECIALITY'}),
+      text: intl.formatMessage({id: 'APCI_NAME'}),
       sort: true,
       sortCaret: sortCaret,
     },
-    /*{
-      dataField: "action",
-      text: "Actions",
-      formatter: columnFormatters.ActionsColumnFormatter,
-      formatExtraData: {
-        openEditApciPage: apcisUIProps.openEditApciPage,
-        openDeleteApciDialog: apcisUIProps.openDeleteApciDialog,
-      },
-      classes: "text-right pr-0",
-      headerClasses: "text-right pr-3",
-      style: {
-        minWidth: "100px",
-      },
-    },*/
+    {
+      dataField: "sexe",
+      text: intl.formatMessage({id: 'APCI_SEXE'}),
+      sort: true,
+      sortCaret: sortCaret,
+    },
+    {
+      dataField: "beneficiaire",
+      text: intl.formatMessage({id: 'APCI_BENEFICIAIRE'}),
+      sort: true,
+      sortCaret: sortCaret,
+    },
+    {
+      dataField: "filiere",
+      text: intl.formatMessage({id: 'APCI_FILIER'}),
+      sort: true,
+      sortCaret: sortCaret,
+    },
   ];
   // Table pagination properties
   const paginationOptions = {

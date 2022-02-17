@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const PRODUCTS_URL = "/pro";
+export const PRODUCTS_URL = "/apci";
 
 // CREATE =>  POST: add a new apci to the server
 export function createApci(apci) {
@@ -20,12 +20,15 @@ export function getApciById(apciId) {
 // items => filtered/sorted result
 export function findApcis(page, count, filter={}, order="asc", orderBy="apciname") {
   const data = {};
-  if (filter.category || filter.gov) {
-    if (filter.category) {
-      data.categorie_prestataire = filter.category;
+  if (filter.names || filter.bens || filter.filiers) {
+    if (filter.names) {
+      data.nom_apci = filter.names;
     }
-    if (filter.gov) {
-      data.gouvernorat = filter.gov;
+    if (filter.bens) {
+      data.beneficaire = filter.bens;
+    }
+    if (filter.filiers) {
+      data.filiere  = filter.filiers;
     }
     return axios.post(`${PRODUCTS_URL}/get_by`, data);
   } else {
@@ -63,4 +66,14 @@ export function getReferences() {
 
 export function getGovs() {
   return axios.get(`${PRODUCTS_URL}/unique_filters?filter=GOVERNORATE`);
+}
+
+export function getBens() {
+  return axios.get(`${PRODUCTS_URL}/all_ben_types`);
+}
+export function getNames() {
+  return axios.get(`${PRODUCTS_URL}/all_names`);
+}
+export function getFiliers() {
+  return axios.get(`${PRODUCTS_URL}/all_filiere`);
 }
