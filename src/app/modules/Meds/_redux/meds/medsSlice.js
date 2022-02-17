@@ -8,7 +8,7 @@ const initialMedsState = {
   medForEdit: undefined,
   lastError: null, 
   categories: [],
-  govs: [],
+  specialities: [],
 };
 export const callTypes = {
   list: "list",
@@ -98,11 +98,11 @@ export const medsSlice = createSlice({
       state.error = null;
       state.categories = entities;
     },
-    govsFetched: (state, action) => {
+    specFetched: (state, action) => {
       const { entities } = action.payload;
       state.listLoading = false;
       state.error = null;
-      state.govs = entities;
+      state.specialities = entities;
     },
   }
 });

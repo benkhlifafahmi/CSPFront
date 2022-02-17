@@ -2,19 +2,17 @@ import React, { useMemo, useEffect } from "react";
 import { Formik } from "formik";
 import { isEqual } from "lodash";
 import { useMedsUIContext } from "../MedUIContext";
-import { fetchCategories, fetchGovs } from "../../../_redux/meds/medsActions";
+import { fetchSpec } from "../../../_redux/meds/medsActions";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
 const prepareFilter = (queryParams, values) => {
-  const { category, gov } = values;
+  const { speciality } = values;
   const newQueryParams = { ...queryParams };
   const filter = {};
-  if (category) {
-    filter.category = category;
+  if (speciality) {
+    filter.speciality = speciality;
   }
-  if (gov) {
-    filter.gov = gov;
-  }
+
   newQueryParams.filter = filter;
   return newQueryParams;
 };
@@ -36,25 +34,22 @@ export function MedsFilter({ listLoading, intl }) {
       medsUIProps.setQueryParams(newQueryParams);
     }
   };
-  const { categories, govs } = useSelector(
+  const { specialities } = useSelector(
     (state) => ({ 
-      categories: state.meds.categories,
-      govs: state.meds.govs,
+      specialities: state.meds.specialities,
     }),
     shallowEqual
   );
   // Meds Redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCategories());
-    dispatch(fetchGovs());
+    dispatch(fetchSpec());
   }, [dispatch]);
   return (
     <>
       <Formik
         initialValues={{
-          gov: "",
-          category: "",
+          speciality: ""
         }}
         onSubmit={(values) => {
           applyFilter(values);
@@ -72,19 +67,19 @@ export function MedsFilter({ listLoading, intl }) {
             <div className="col-lg-3">
                 <select
                   className="form-control"
-                  name="category"
+                  name="speciality"
                   placeholder={intl.formatMessage({id:'PH_CATEGORY_FILTER'})}
                   onChange={(e) => {
-                    setFieldValue("category", e.target.value);
+                    setFieldValue("speciality", e.target.value);
                     handleSubmit();
                   }}
                   onBlur={handleBlur}
-                  value={values.category}
+                  value={values.speciality}
                 >
                   <option value="">{intl.formatMessage({id: 'PRO_ALL_CAT'})}</option>
                   {
-                    (categories||[]).map(
-                      category => (<option value={category}>{category}</option>)
+                    (specialities||[]).map(
+                      speciality => (<option value={speciality}>{speciality}</option>)
                     )
                   }
                 </select>
@@ -92,30 +87,6 @@ export function MedsFilter({ listLoading, intl }) {
                   <b>{intl.formatMessage({id: 'PH_CATEGORY_FILTER'})}</b>
                 </small>
               </div>
-              <div className="col-lg-3">
-                <select
-                  className="form-control"
-                  name="gov"
-                  placeholder={intl.formatMessage({id:'PH_CATEGORY_FILTER'})}
-                  onChange={(e) => {
-                    setFieldValue("gov", e.target.value);
-                    handleSubmit();
-                  }}
-                  onBlur={handleBlur}
-                  value={values.gov}
-                >
-                  <option value="">{intl.formatMessage({id: 'PRO_ALL_CAT'})}</option>
-                  {
-                    (govs||[]).map(
-                      gov => (<option value={gov}>{gov}</option>)
-                    )
-                  }
-                </select>
-                <small className="form-text text-muted">
-                  <b>{intl.formatMessage({id: 'PH_CATEGORY_FILTER'})}</b>
-                </small>
-              </div>
-              
             </div>
           </form>
         )}

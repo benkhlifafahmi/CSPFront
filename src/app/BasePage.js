@@ -5,6 +5,7 @@ import { DashboardPage } from "./pages/DashboardPage";
 import { ProfessionalPage } from "./modules/Professional";
 import { AssurePage } from "./modules/Assures";
 import { ApciPage } from "./modules/APCI";
+import { MedPage } from './modules/Meds';
 
 export default function BasePage() {
 
@@ -19,6 +20,7 @@ export default function BasePage() {
         <ContentRoute path="/professional" component={ProfessionalPage} />
         <ContentRoute path="/assure" component={AssurePage} />
         <ContentRoute path="/apci" component={ApciPage} />
+        <ContentRoute path="/med" component={MedPage} />
         
         <Redirect to="error/error-v1" />
       </Switch>

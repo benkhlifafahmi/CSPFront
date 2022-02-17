@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const PRODUCTS_URL = "/pro";
+export const PRODUCTS_URL = "/meds";
 
 // CREATE =>  POST: add a new med to the server
 export function createMed(med) {
@@ -20,14 +20,8 @@ export function getMedById(medId) {
 // items => filtered/sorted result
 export function findMeds(page, count, filter={}, order="asc", orderBy="medname") {
   const data = {};
-  if (filter.category || filter.gov) {
-    if (filter.category) {
-      data.categorie_prestataire = filter.category;
-    }
-    if (filter.gov) {
-      data.gouvernorat = filter.gov;
-    }
-    return axios.post(`${PRODUCTS_URL}/get_by`, data);
+  if (filter.speciality) {
+    return axios.post(`${PRODUCTS_URL}/get_by_speciality?speciality=${filter.speciality}`, data);
   } else {
     return axios.get(`${PRODUCTS_URL}/all`);
   }
@@ -61,6 +55,6 @@ export function getReferences() {
   return axios.get(`${PRODUCTS_URL}/unique_filters?filter=CENTRE_REFERENCE`);
 }
 
-export function getGovs() {
-  return axios.get(`${PRODUCTS_URL}/unique_filters?filter=GOVERNORATE`);
+export function fetchSpec() {
+  return axios.get(`${PRODUCTS_URL}/get_all_specialities`);
 }

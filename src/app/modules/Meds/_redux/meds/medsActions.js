@@ -105,15 +105,16 @@ export const fetchCategories = () => dispatch => {
     });
 };
 
-export const fetchGovs = () => dispatch => {
+export const fetchSpec = () => dispatch => {
   dispatch(actions.startCall({ callType: callTypes.list }));
   return requestFromServer
-    .getGovs()
+    .fetchSpec()
     .then(response => {      
-      dispatch(actions.govsFetched({ entities: response.data }));
+      dispatch(actions.specFetched({ entities: response.data }));
     })
     .catch(error => {
       error.clientMessage = "Can't find meds";
       dispatch(actions.catchError({ error, callType: callTypes.list }));
     });
 };
+

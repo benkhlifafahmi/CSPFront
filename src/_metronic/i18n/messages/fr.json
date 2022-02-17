@@ -201,5 +201,6 @@
   "APCI_FILIER": "Filier",
   "PH_FILTER_SEXE": "Filtrer par sexe",
   "ALL": "Tous",
-  "PH_FILTER_BEN": "Filtrer par Beneficiaire"
+  "PH_FILTER_BEN": "Filtrer par Beneficiaire",
+  "MENU.MED": "Medecin"
 }

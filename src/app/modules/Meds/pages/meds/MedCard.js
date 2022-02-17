@@ -30,7 +30,7 @@ function HeatMap({entities}) {
     })
     const points = entities !== null
     ? entities.map((p) => {
-      return [p.longitude, p.latitude, 1]; // lat lng intensity
+      return [p.latitude, p.longitude, 1]; // lat lng intensity
     }).filter(p => p[0] !== null && p[1] !== null)
     : [];
     if (container && points.length > 0) {
@@ -53,7 +53,7 @@ function ClusterMap({entities}) {
     })
     const points = entities
     ? entities.map((p) => {
-      return  [p.longitude, p.latitude]; // lat lng intensity
+      return  [p.latitude, p.longitude]; // lat lng intensity
     }).filter(p => p[0] !== null && p[1] !== null)
     : [];
     

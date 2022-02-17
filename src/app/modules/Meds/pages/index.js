@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Redirect, Switch } from "react-router-dom";
-import { MedsPage } from "./med/MedPage";
+import { MedsPage } from "./meds/MedPage";
 import { LayoutSplashScreen, ContentRoute } from "../../../../_metronic/layout";
 
 export default function MedPage() {
