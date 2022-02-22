@@ -100,7 +100,7 @@ export function ApcisCard({ intl }) {
 
   return (
     <Card>
-      <CardHeader title={intl.formatMessage({ id: 'STAFF.PROFESSIONAL_LIST' })}>
+      <CardHeader title={intl.formatMessage({ id: 'APCI_LIST' })}>
 
       </CardHeader>
       <CardBody>

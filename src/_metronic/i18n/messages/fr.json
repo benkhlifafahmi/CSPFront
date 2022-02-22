@@ -202,5 +202,9 @@
   "PH_FILTER_SEXE": "Filtrer par sexe",
   "ALL": "Tous",
   "PH_FILTER_BEN": "Filtrer par Beneficiaire",
-  "MENU.MED": "Medecin"
+  "MENU.MED": "Medecin",
+  "APCI_LIST": "List des APCI",
+  "STAFF.ASSURES_LIST": "List des assures",
+  "PH_FILTER_FIL": "Filtrer par filiers",
+  "PH_FILTER_ACPI": "Filtrer par APCI"
 }

@@ -104,7 +104,7 @@ export function ApcisFilter({ listLoading, intl }) {
                 <select
                   className="form-control"
                   name="filiers"
-                  placeholder={intl.formatMessage({ id: 'PH_FILTER_BNF' })}
+                  placeholder={intl.formatMessage({ id: 'PH_FILTER_FIL' })}
                   onChange={(e) => {
                     setFieldValue("filiers", e.target.value);
                     handleSubmit();
@@ -120,14 +120,14 @@ export function ApcisFilter({ listLoading, intl }) {
                   }
                 </select>
                 <small className="form-text text-muted">
-                  <b>{intl.formatMessage({ id: 'PH_FILTER_BEN' })}</b>
+                  <b>{intl.formatMessage({ id: 'PH_FILTER_FIL' })}</b>
                 </small>
               </div>
               <div className="col-lg-3">
                 <select
                   className="form-control"
                   name="names"
-                  placeholder={intl.formatMessage({ id: 'PH_FILTER_BNF' })}
+                  placeholder={intl.formatMessage({ id: 'PH_FILTER_ACPI' })}
                   onChange={(e) => {
                     setFieldValue("names", e.target.value);
                     handleSubmit();
@@ -143,7 +143,7 @@ export function ApcisFilter({ listLoading, intl }) {
                   }
                 </select>
                 <small className="form-text text-muted">
-                  <b>{intl.formatMessage({ id: 'PH_FILTER_BEN' })}</b>
+                  <b>{intl.formatMessage({ id: 'PH_FILTER_ACPI' })}</b>
                 </small>
               </div>
             </div>
