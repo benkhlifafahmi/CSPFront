@@ -60,19 +60,6 @@ export function AsideMenuList({ layoutProps }) {
                   <span className="menu-text">{intl.formatMessage({ id: 'MENU.APCI' })}</span>
                 </NavLink>
               </li>
-
-
-              <li
-                className={`menu-item ${getMenuItemActive("/med", false)}`}
-                aria-haspopup="true"
-              >
-                <NavLink className="menu-link" to="/med">
-                  <span className="svg-icon menu-icon">
-                    <SVG src={toAbsoluteUrl("/media/svg/icons/Map/Compass.svg")} />
-                  </span>
-                  <span className="menu-text">{intl.formatMessage({ id: 'MENU.MED' })}</span>
-                </NavLink>
-              </li>
       </ul>
 
       {/* end::Menu Nav */}
