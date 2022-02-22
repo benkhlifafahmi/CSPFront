@@ -20,54 +20,54 @@ import MarkerClusterGroup from 'react-leaflet-cluster'
 import PieChartAge from "./PieChartAge";
 import PieChartSexe from "./PieChartSexe";
 
-function HeatMap({entities}) {
+function HeatMap({ entities }) {
   const context = useLeafletContext()
   useEffect(() => {
     const container = context.layerContainer || context.map;
-    container.eachLayer(function(layer) {
+    container.eachLayer(function (layer) {
       //container.removeLayer(layer)
-      if(layer.options.isHeat) {
+      if (layer.options.isHeat) {
         container.removeLayer(layer);
       }
     })
     const points = entities
-    ? entities.map((p) => {
-      return [p.longitude, p.latitude, 1]; // lat lng intensity
-    }).filter(p => p[0] !=null && p[1] !== null)
-    : [];
+      ? entities.map((p) => {
+        return [p.longitude, p.latitude, 1]; // lat lng intensity
+      }).filter(p => p[0] != null && p[1] !== null)
+      : [];
     console.log('points: ', points)
-    L.heatLayer(points, {isHeat: true, gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}, radius: 25}).addTo(container);
+    L.heatLayer(points, { isHeat: true, gradient: { 0.4: 'blue', 0.65: 'lime', 1: 'red' }, radius: 25 }).addTo(container);
   }, [entities]);
-  return null;  
+  return null;
 }
 
 
-function ClusterMap({entities}) {
+function ClusterMap({ entities }) {
   const context = useLeafletContext()
   useEffect(() => {
     const container = context.layerContainer || context.map;
-    container.eachLayer(function(layer) {
+    container.eachLayer(function (layer) {
       //container.removeLayer(layer)
-      if(layer.options.isCluster) {
+      if (layer.options.isCluster) {
         container.removeLayer(layer);
       }
     })
     const points = entities
-    ? entities.map((p) => {
-      return [p.longitude, p.latitude]; // lat lng intensity
-    }).filter(p => p[0] !=null && p[1] !== null)
-    : [];
-    
-    const markers =L.markerClusterGroup({isCluster: true});
+      ? entities.map((p) => {
+        return [p.longitude, p.latitude]; // lat lng intensity
+      }).filter(p => p[0] != null && p[1] !== null)
+      : [];
 
-    for(const point of points) {
+    const markers = L.markerClusterGroup({ isCluster: true });
+
+    for (const point of points) {
       markers.addLayer(L.marker(point));
     }
 
     container.addLayer(markers);
 
   }, [entities]);
-  return null;  
+  return null;
 }
 
 export function AssuresCard({ intl }) {
@@ -102,37 +102,54 @@ export function AssuresCard({ intl }) {
 
 
   return (
-    <Card>
-      <CardHeader title={intl.formatMessage({ id: 'STAFF.ASSURES_LIST' })}>
-
-      </CardHeader>
-      <CardBody>
-        {assuresUIProps.ids.length > 0 && (
-          <>
-            <AssuresGrouping intl={intl} />
-          </>
-        )}
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-          <div style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <PieChartAge entries={entities}/>
-          </div>
-          <div style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <PieChartSexe entries={entities}/>
-          </div>
+    <div>
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <Card>
+            <CardHeader title={intl.formatMessage({ id: 'STATS_APCI_AGE' })}>
+            </CardHeader>
+            <CardBody>
+              <PieChartAge entries={entities} />
+            </CardBody>
+          </Card>
         </div>
-        <div style={{display: 'flex'}}>
-        <MapContainer style={{ height: '80vh', flex: .5, zIndex: 0 }} center={[35.5593013, 9.430487]} zoom={7} scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <HeatMap entities={entities}/>
-          <ClusterMap entities={entities} />
-
-        </MapContainer>
-        <AssuresTable intl={intl} assuresUIProps={assuresUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
+        <div class="col-md-4 col-sm-12"></div>
+        <div class="col-md-4 col-sm-12">
+          <Card>
+            <CardHeader title={intl.formatMessage({ id: 'STATS_APCI_SEXE' })}>
+            </CardHeader>
+            <CardBody>
+              <PieChartSexe entries={entities} />
+            </CardBody>
+          </Card>
         </div>
-      </CardBody>
-    </Card>
+      </div>
+
+
+      <Card>
+        <CardHeader title={intl.formatMessage({ id: 'STAFF.ASSURES_LIST' })}>
+
+        </CardHeader>
+        <CardBody>
+          {assuresUIProps.ids.length > 0 && (
+            <>
+              <AssuresGrouping intl={intl} />
+            </>
+          )}
+          <div style={{ display: 'flex' }}>
+            <MapContainer style={{ height: '80vh', flex: .5, zIndex: 0 }} center={[35.5593013, 9.430487]} zoom={7} scrollWheelZoom={false}>
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <HeatMap entities={entities} />
+              <ClusterMap entities={entities} />
+
+            </MapContainer>
+            <AssuresTable intl={intl} assuresUIProps={assuresUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
+          </div>
+        </CardBody>
+      </Card>
+    </div>
   );
 }

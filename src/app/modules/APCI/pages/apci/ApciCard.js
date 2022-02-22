@@ -17,7 +17,9 @@ import "leaflet.heat";
 import L from 'leaflet'
 import { useLeafletContext } from '@react-leaflet/core'
 import MarkerClusterGroup from 'react-leaflet-cluster'
-
+import PieChartAPCI from "./PieCharAPCI";
+import PieChartAge from "./PieChartAge";
+import PieChartFilier from './PieChartFilier';
 function HeatMap({entities}) {
   const context = useLeafletContext()
   useEffect(() => {
@@ -99,29 +101,62 @@ export function ApcisCard({ intl }) {
 
 
   return (
-    <Card>
-      <CardHeader title={intl.formatMessage({ id: 'APCI_LIST' })}>
-
-      </CardHeader>
-      <CardBody>
-        <ApcisFilter intl={intl} />
-        {apcisUIProps.ids.length > 0 && (
-          <>
-            <ApcisGrouping intl={intl} />
-          </>
-        )}
-        <div style={{display: 'flex'}}>
-        <MapContainer style={{ height: '80vh', flex: .5, zIndex: 0 }} center={[35.5593013, 9.430487]} zoom={7} scrollWheelZoom={false}>
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <HeatMap entities={entities}/>
-          <ClusterMap entities={entities} />
-        </MapContainer>
-        <ApcisTable intl={intl} apcisUIProps={apcisUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
+    <div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <Card>
+            <CardHeader title={intl.formatMessage({ id: 'STATS_APCI' })}>
+            </CardHeader>
+            <CardBody>
+              <PieChartAPCI entries={entities} />
+            </CardBody>
+          </Card>
         </div>
-      </CardBody>
-    </Card>
+        <div class="col-md-3 col-sm-12">
+          <Card>
+            <CardHeader title={intl.formatMessage({ id: 'STATS_APCI_AGE_LIST' })}>
+            </CardHeader>
+            <CardBody>
+              <PieChartAge entries={entities} />
+            </CardBody>
+          </Card>
+        </div>
+        <div class="col-md-3 col-sm-12">
+          <Card>
+            <CardHeader title={intl.formatMessage({ id: 'STATS_APCI_FILIER_LIST' })}>
+            </CardHeader>
+            <CardBody>
+              <PieChartFilier entries={entities} />
+            </CardBody>
+          </Card>
+        </div>
+        
+      </div>
+      <Card>
+        <CardHeader title={intl.formatMessage({ id: 'APCI_LIST' })}>
+
+        </CardHeader>
+        <CardBody>
+          <ApcisFilter intl={intl} />
+          {apcisUIProps.ids.length > 0 && (
+            <>
+              <ApcisGrouping intl={intl} />
+            </>
+          )}
+          <div style={{display: 'flex'}}>
+          <MapContainer style={{ height: '80vh', flex: .5, zIndex: 0 }} center={[35.5593013, 9.430487]} zoom={7} scrollWheelZoom={false}>
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <HeatMap entities={entities}/>
+            <ClusterMap entities={entities} />
+          </MapContainer>
+          <ApcisTable intl={intl} apcisUIProps={apcisUIProps} totalCount={totalCount} entities={entities} listLoading={listLoading} />
+          </div>
+        </CardBody>
+      </Card>
+    </div>
+    
   );
 }

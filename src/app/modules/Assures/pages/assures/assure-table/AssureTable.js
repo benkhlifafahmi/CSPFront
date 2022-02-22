@@ -71,6 +71,7 @@ export function AssuresTable({intl, totalCount, entities, listLoading, assuresUI
               paginationProps={paginationProps}
             >
               <BootstrapTable
+                csvExport 
                 wrapperClasses="table-responsive"
                 classes="table table-head-custom table-vertical-center overflow-hidden"
                 bootstrap4
