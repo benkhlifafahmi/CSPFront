@@ -21,7 +21,7 @@ export function getMedById(medId) {
 export function findMeds(page, count, filter={}, order="asc", orderBy="medname") {
   const data = {};
   if (filter.speciality) {
-    return axios.post(`${PRODUCTS_URL}/get_by_speciality?speciality=${filter.speciality}`, data);
+    return axios.get(`${PRODUCTS_URL}/get_by_speciality?speciality=${filter.speciality}`);
   } else {
     return axios.get(`${PRODUCTS_URL}/all`);
   }
